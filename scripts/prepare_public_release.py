@@ -470,9 +470,9 @@ Version: `v1.0.0`
 - [x] Public GitHub URL resolves.
 - [ ] Software DOI resolves.
 - [ ] Unified data DOI resolves.
-- [ ] `CHECKSUMS.sha256` passes in a clean clone.
-- [ ] Minimal dataset reports 302 checks and zero differences.
-- [ ] No absolute local paths, private hosts or submission correspondence.
+- [x] `CHECKSUMS.sha256` passes in a clean clone.
+- [x] Minimal dataset reports 302 checks and zero differences.
+- [x] No absolute local paths, private hosts or submission correspondence.
 
 Reserved unified-data DOI: `{DATA_DOI}`. It will resolve after the Zenodo
 draft is published.
