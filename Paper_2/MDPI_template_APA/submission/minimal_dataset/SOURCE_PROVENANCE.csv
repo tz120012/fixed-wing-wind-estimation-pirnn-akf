@@ -1,0 +1,7 @@
+artifact,local_source,status
+Figure02_Table04_main_metrics_per_seed.csv and Figure02_KalmanNet_predictions_*.csv,"data/revision_main_41d/predictions/*.npz, ekf_predictions.npz, and data/revision_kalmannet_41d/*.npy",derived
+Table05_cross_configuration_*.csv,data/revision_cross_airframe/cross_airframe_predictions.npz,prediction metrics derived; closure RMSE remains aggregate-only
+Table09_causal_smoothing_*.csv and AKF_grouped_sensitivity_*.csv,data/revision_akf/akf_sensitivity_and_baselines.csv,summary and all 63 source rows included
+MainStatistics_*.csv,data/revision_main_41d/statistics,"five-seed, moving-block bootstrap and paired-window outputs"
+Table11/Figure07/FigureA5 HITL CSV files,HITL/sessions/* and campaign_summary,derived from ten aligned sessions
+Retained experiment CSV files,submission/minimal_dataset,unchanged experiments retained in current manuscript

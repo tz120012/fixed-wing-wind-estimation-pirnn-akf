@@ -1,0 +1,11 @@
+category,item,setting
+Input,dimension,41
+Sampling,rate_hz,50
+Sampling,sequence_steps,100
+Architecture,GRU hidden size,128
+Architecture,LSTM hidden size,110
+Optimization,learning rate,1e-4
+Optimization,batch size,1024
+Optimization,maximum epochs,150
+Replicates,random seeds,"26,42,2024,2025,2026"
+Deployment,latency budget ms,20

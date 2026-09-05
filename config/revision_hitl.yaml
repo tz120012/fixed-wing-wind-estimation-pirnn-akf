@@ -1,0 +1,66 @@
+protocol:
+  name: drones_revision_repeated_hitl_v1
+  frozen_date: "2026-08-26"
+  status: "blocked_hardware_not_connected"
+  revision_protocol: "config/revision_protocol.yaml"
+
+hardware:
+  flight_controller: "CUAV V5+"
+  companion_computer: "Raspberry Pi 5"
+  serial_device: "/dev/ttyACM0"
+  serial_baud: 921600
+  clock_sync_required: true
+  clock_sync_method: "record FC boot time, companion monotonic time, and a shared synchronization pulse/event"
+
+software:
+  model_input_dimension: 41
+  inference_backend: "ONNX Runtime"
+  estimator: "PIRNN-AKF"
+  config_source: "config/config_hitl.yaml"
+  frozen_config_copy: "HITL/revision_protocol/config_hitl_frozen.yaml"
+
+sessions:
+  conditions:
+    - name: "id"
+      independent_sessions: 5
+      horizontal_wind_range_mps: [1.0, 3.0]
+    - name: "ood"
+      independent_sessions: 5
+      horizontal_wind_range_mps: [4.0, 8.0]
+  duration_s: 120
+  warmup_exclusion_s: 20
+  minimum_valid_post_warmup_s: 100
+  truth_alignment_tolerance_ms: 100
+  randomized_condition_order: true
+
+required_per_frame_fields:
+  - session_id
+  - condition
+  - fc_boot_time_us
+  - companion_monotonic_ns
+  - truth_time_us
+  - truth_wind_n_mps
+  - truth_wind_e_mps
+  - truth_wind_d_mps
+  - estimated_wind_n_mps
+  - estimated_wind_e_mps
+  - estimated_wind_d_mps
+  - inference_latency_ms
+  - companion_processing_latency_ms
+  - deadline_missed
+
+reporting:
+  replicate_unit: "independent_session"
+  metrics:
+    - rmse_3d
+    - rmse_n
+    - rmse_e
+    - rmse_d
+    - direction_mae_deg
+    - achieved_loop_hz
+    - missed_deadline_ratio
+    - inference_latency_mean_ms
+    - inference_latency_p95_ms
+    - companion_processing_mean_ms
+    - companion_processing_p95_ms
+  forbidden_latency_label_without_synced_clocks: "MAVLink round-trip latency"

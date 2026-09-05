@@ -1,0 +1,4 @@
+ablation_setting,test_id_rmse_mps,test_id_change_vs_full_pct,test_ood_rmse_mps,test_ood_change_vs_full_pct
+Full 45-D input (baseline),0.221,,0.574,
+Zeroed actuator-proxy group (4-D),0.210,-4.9,0.558,-2.8
+Zeroed control-surface-command group (4-D),0.223,1.0,0.610,6.3

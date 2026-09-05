@@ -1,0 +1,349 @@
+# ==================== PI-GRU 风场估计配置文件（HITL 硬件在环专用）====================
+# 用途：CUAV V5+ + Raspberry Pi 5 真实 HITL 实验。
+# 与 config.yaml 的差异仅在 deployment.mavlink_connection（串口）与 logging.log_dir（落盘到 HITL/logs_in_rasbpi/）。
+# 树莓派上运行：  python3 src/6c_online_deployment_pigru-akf_rsbpi.py --config config/config_hitl.yaml
+# 其余训练/模型/AKF 超参与主配置保持一致，切勿单独改动以免与已发布模型不符。
+
+# ===== 实验配置（训练启动参数，避免命令行传参） =====
+experiment:
+  mode: "single"                             # single | sweep
+  lambda_list: "0.01,0.03,0.05,0.07,0.09,0.11,0.13,0.15,0.17,0.19"   # sweep 模式下的 lambda 列表（逗号分隔）
+  # 上一轮（0.0-1.0）发现 λ≥0.4 在 physics_warmup=5 下发散
+  # 本轮 physics_warmup_epochs=20，重点验证 0.0-0.5 能否稳定收敛
+  lambda_physics_override: 0.1               # single 模式下覆盖 lambda_physics（null=使用config值）
+  physics_mode: "attitude"                   # simple | attitude | 6dof
+  training_profile: "direction_focus"        # auto | default | temporal_stable | direction_focus
+  run_tag: "qvol_windowed_v2"                 # 本轮：q_scale 监督窗口化湍流强度（滚动标准差），单步增量不可学已验证
+  processed_dir: "data/dataset_new_processed"       # 预处理数据目录（相对项目根目录）
+  output_base_dir: "train_data1"             # 训练输出根目录（相对项目根目录）
+  auto_timestamp: true                       # 自动在输出目录名中追加时间戳
+
+data:
+  raw_log_dir: "../data/data_raw/"           # 仿真采集的原始数据
+  csv_dir: "../data/data_csv/"                  # JSON转CSV后的数据
+  processed_dir: "../data/dataset_new_processed/"     # 预处理后的训练数据
+  # 当前生效数据集采用 stratified_run_out（按风强度 4 层分层，OOD 完全隔离），
+  # 见 1_preprocessing_data.py。train 脚本只读 npy + norm_params.pkl，本字段仅作元信息。
+  split_strategy: "stratified_run_out"
+  stratified_n_strata: 4              # 风强度分层数（与 1_preprocessing_data.py --stratified_n_strata 一致）
+  stratified_train_frac: 0.8          # stratum 内 train 占比（test_ood 不参与）
+  stratified_val_frac: 0.1            # stratum 内 val 占比；test_id = 1 - train - val
+  direction_bins: 8                   # temporal_stratified_directional 的风向扇区数量（旧策略残留）
+  altitude_bins: 4                   # temporal_stratified 的高度分层数量（旧策略残留）
+  train_ratio: 0.8                    # 仅 within_run_temporal 等老策略使用，stratified_run_out 已不读取
+  sampling_rate: 50                   # Hz（必须与 1_preprocessing_data.py --sampling_rate 一致；部署端 inference_rate=50）
+  sequence_length: 100                # 时间步数 (100步 / 50Hz = 2秒历史数据；扩大以覆盖阵风上升沿 4-10s 的初期动态)
+  # 新数据采集 ~240 Hz，预处理用 --downsample_factor 5 降到 50 Hz；旧 50 Hz 数据用 1。
+  # 本字段仅供再次运行 1_preprocessing_data.py 时参考；当前 npy 已按 5 处理完成。
+  downsample_factor: 5
+  sample_ratio: 0.2                   # 1_preprocessing_data.py 使用的随机窗口下采样比例（受 31GB RAM 限制）
+  sequence_batch_size: 5000           # 序列生成批次大小 (减少内存占用)
+  
+  # 数据增强配置
+  augmentation:
+    enabled: true                     # 开启：与 yaw_invariant 显式表示形成"显式+隐式"双重 yaw-invariant
+    noise_std: 0.01                   # 回到 v2 主配置：v3/v4 加重噪声反而欠拟合，证明 0.01 是最优点
+    rotation_range: 180.0             # yaw 旋转范围(度)：±180° 覆盖全风向，强制 yaw-invariant 学习
+
+model:
+  input_size: 41                      # 最终协议：删除确定性执行器代理 38--41
+  hidden_size: 128                    # 保持128
+  num_layers: 2                       # GRU层数
+  dropout: 0.35                       # 回到 v2 主配置：v3/v4 加重 dropout 反而欠拟合（论文 §4.5 表7 已验证）
+  enable_noise_heads: true            # q_scale/r_scale 辅助头
+  enable_angles_head: true            # Δα/Δβ/s_tas 辅助头
+  enable_confidence_head: true        # confidence 辅助头
+  yaw_invariant: true                 # 开启：track 系归一化常数已修正（实测值：cross_std=4.55, yaw_diff_std=0.137）
+  
+  # 输出配置
+  output_size: 7                      # 风速(3)+地速(3)+空速(1) = 7维输出
+  wind_output_size: 3                 # 风速估计维度 (N, E, D)
+
+training:
+  batch_size: 1024                    # 翻倍减少迭代次数
+  seed: 26                            # 全局随机种子（复现实验）
+  num_epochs: 500
+  learning_rate: 0.0001               # direction_focus 要求 ≤1e-4
+
+  # DataLoader 加速配置（修复每 epoch 时间长的问题）
+  num_workers: 0                      # WSL2 共享内存不足，使用单进程加载
+  persistent_workers: false           # 单进程模式下无需持久化 worker
+  prefetch_factor: 4                  # 每 worker 预取 batch 数
+  
+  # 监督/物理损失权重
+  lambda_physics: 0.1                # 由 0.1 → 0.02：与最近 CLI 显式传参一致，避免预热末段把 val 拽偏
+  lambda_phys_dyn: 0.0                # 阶段3 L_dyn 默认关闭；启用条件：input_size>=45 且 physics.use_dyn_residual=true
+                                       # 推荐值 0.05~0.1（开启时）；先小规模验证再调高，气动模型误差可能污染监督信号
+  lambda_wind: 1.0                    # 三轴风速 MSE 权重
+  lambda_dir: 0.1                     # 由 1.0 → 0.1：风向损失单位是°，1.0 让 val_loss 被 16°方向误差主导（占 95%）
+  lambda_mag: 0.1                     # 风速模值 Smooth L1 损失权重
+  lambda_phys_dir: 30.0               # 物理方向损失权重（加权 cos 距离 ∈ [0,2]，训练初期贡献~0.22，收敛后~0.05）
+  lambda_phys_down: 0.3               # 直接物理垂向风损失权重
+  direction_loss_min_horizontal_wind: 0.5  # 由 0.2 → 0.5：避开真值方向噪声大的弱风样本
+
+  # ===== 弱风段失效专项（来自 evil-sample 分析的三剑客） =====
+  # ① 防崩塌正则：当 ||w_pred_h|| 低于阈值时给 hinge 平方惩罚，
+  #   阻止模型在弱风段把预测压到 ~0 m/s 导致"假装无风"+方向随机化。
+  #   evil 样本统计：pred_h_mag 中位数 0.03 m/s（应为 ~1.2），是主要失效模式。
+  # 数值标定：完全崩塌时 hinge² = (0.3)² = 0.09，要让它和 lambda_dir·dir_loss 同量级
+  # （dir_loss 收敛后~16°，贡献 ≈ 0.1·16 = 1.6），需 λ·0.09 ≈ 0.5 → λ ≈ 5
+  # 训练初期 dir_loss 70°+，贡献 ~7，崩塌惩罚最大 0.45；后期 dir 16°，崩塌惩罚 0.45 ≈ 30%
+  # 这个比例足以扭转崩塌，又不会强迫小真值预测过大
+  lambda_anti_collapse: 5.0           # 由 0.05 → 5.0：之前太小导致零梯度信号（Epoch 12 evil 比例无变化）
+  anti_collapse_threshold: 0.3        # 阈值 0.3 m/s：仅惩罚真正崩塌的预测，不影响小风正常输出
+
+  # ② SNR-aware 损失加权：弱风段降低 dir loss 权重 + 提升 mag loss 权重
+  snr_aware:
+    enabled: true                     # 总开关
+    weak_threshold: 1.5               # |w_h| < 此值视为弱风，按线性 ramp 加权
+    dir_min_weight: 0.3               # 弱风样本 dir loss 最小权重（强风=1.0）
+    mag_boost: 1.5                    # 弱风样本 mag loss 提升倍数（强风=1.0）
+
+  # ③ Wind-bin 反频率重采样：按真值 |w_h| 直方图频率倒数加权样本
+  #   alpha=0.5 半反频率（避免过度倒置），max_weight=3.0 防极端
+  bin_rebalance:
+    enabled: true                     # 总开关
+    n_bins: 12                        # 0–edge_max 等宽分箱数
+    alpha: 0.5                        # 反频率指数：0=禁用，1=完全反频率
+    max_weight: 3.0                   # 单样本权重上限（防 0.5–1 m/s 极小箱权重爆炸）
+
+  physics_warmup_epochs: 20            # 由 20 → 5：缩短预热，避免在 best 甜区(epoch 5–10)上反向上拉 val_physics
+  selection_metric: "composite_score" # 由 wind_mag_rmse → composite_score：经实验验证 mag 在 epoch 2 即达到数据噪声地板(~0.42 m/s)，
+                                      #   方向才是真正瓶颈；composite=rmse + 0.5·mag_rmse + 1.25·(dir/30)
+                                      #   能同时反映方向改善 + 防止 mag 反弹，比单看任何一项都更稳健
+  selection_alpha: 0.5                # composite 中模值 RMSE 权重
+  selection_beta: 1.25                # composite 中风向误差权重（按角度/180 归一化）
+
+  # q/r 自适应头 - 让噪声头直接进入主损失，而不是只靠固定目标正则
+  enable_uncertainty_loss: true
+  lambda_uncertainty: 0.2
+  # ===== q_scale 监督目标重设计（动态过程噪声）=====
+  # 'residual'   : 旧行为，q_scale 监督风估计残差（实为 NN 输出不确定度，与过程噪声无关）
+  # 'volatility' : 新行为，q_scale 监督真实风逐步增量 |Δw_true|（过程波动），
+  #                使 q_scale 真正承载"风变化快慢"信息，供 AKF 动态调节过程噪声 Q
+  q_supervision: "volatility"
+  q_vol_window: 50                    # 湍流强度滚动窗口（步），50步@50Hz=1s；单步增量不可预测，窗口化 autocorr≈0.998 可学
+  q_vol_target_lo: 0.5                # 低波动样本映射到的 q_scale 目标下界
+  q_vol_target_hi: 3.5               # 高波动样本映射到的 q_scale 目标上界
+  uncertainty_wind_weight: 1.0        # q_scale: 监督风残差异方差项
+  uncertainty_gps_weight: 0.6         # r_scale[GPS]: 速度三角残差异方差项
+  uncertainty_tas_weight: 0.4         # r_scale[TAS]: 空速一致性异方差项
+  uncertainty_att_weight: 0.2         # r_scale[ATT]: 小角修正异方差项
+
+  # ===== 动态段加权（gust_phase / gust_factor sample weight） =====
+  # 配合 1_preprocessing_data.py 输出的 w_*.npy；让阵风过渡段在 data_loss /
+  # magnitude_loss 中得到更高权重，引导模型学习阵风跟踪。
+  dynamic_sample_weight:
+    enabled: true                     # 总开关；缺失 w_*.npy 时自动退化为均匀权重
+    apply_to: ['data', 'magnitude']   # 哪些损失参与加权（仅这些项支持 sample_weight）
+    clamp: [0.5, 5.0]                 # 训练时对权重做裁剪，避免极端阵风样本主导梯度
+
+  # 正则化
+  lambda_reg: 0.0005                  # q/r scale 正则化权重
+  reg_huber_delta: 0.5                # scale 正则 Huber delta
+  reg_boundary_penalty: 3.0          # scale 超出 qr_scale_range 的边界惩罚系数
+  weight_decay: 0.0005                # 回到 v2 主配置：v3/v4 加重 wd 反而欠拟合（论文 §4.5 表7 已验证）
+  gradient_clip_norm: 1.0             # 梯度裁剪
+
+  # 验证 / 选模平滑（EMA on validation weights）
+  angles_warmup_epochs: 50            # 方案B：前50轮屏蔽角度修正头，迫使物理残差更新风场
+  ema_decay: 0.999                    # >0 启用 EMA 影子权重；0=关闭
+  use_ema_validation: true            # 用 EMA 权重做验证 + 保存 best，平滑后期 ±0.005 噪声抖动
+
+  # 早停
+  early_stopping_patience: 30        # 验证集无改善N轮即停止
+  
+  # 保存路径（PIGRU 流程被 experiment.output_base_dir 覆盖；VanillaGRU 直接读取此值）
+  # 部署链路(6c/load_normalization_params)据此定位 norm_params.pkl，须指向 45 维主模型目录
+  model_save_path: "data/dataset_revision_41d/"
+  checkpoint_save_interval: 50        # 每50轮保存一次检查点
+  save_best_only: true                # 是否只保存最佳模型
+
+scheduler:
+  type: "ReduceLROnPlateau"           # 学习率调度器类型
+  mode: "min"                         # 监控验证损失的最小值
+  factor: 0.3                         # 由 0.5 → 0.3：plateau 后更大幅降 lr，挤出后期改进空间
+  patience: 10                        # 由 5 → 10：composite_score 含方向噪声更大，5 轮过敏感；10 轮更稳健
+  min_lr: 1.0e-6                      # 最小学习率下限
+  verbose: true                       # 打印学习率变化信息
+
+# ===== AKF 后端配置（PIRNN-AKF 融合）=====
+# 旧默认（measurement-dominated）：Q_nominal=[0.05,0.05,0.02], R_kin=[1.0,1.0,0.36]
+#   该体制下标称 Q 远小于 R，动态 q_scale 缩放无法改变卡尔曼增益（实验已验证动态 Q 惰性）。
+# 新 process-aware 体制：抬高标称 Q 量级、适度抬高运动学伪量测噪声 R_kin，
+#   使高波动时 Q 可逼近 R，从而让 PI-GRU 输出的动态过程噪声 q_scale 真正改变增益。
+akf:
+  response_profile: "smooth"          # smooth | tracking
+  process_aware: false
+  q_nominal: [0.05, 0.05, 0.02]
+  r_kin_nominal: [1.00, 1.00, 0.36]
+  r_nn_nominal: [0.06, 0.06, 0.04]    # PI-GRU 量测噪声标称（保持）
+  constants:
+    prediction_delta_gain: 0.25
+    mahalanobis_gate: 9.0
+    maneuver_gyro_weight: 0.45
+    maneuver_acc_weight: 0.30
+    maneuver_control_weight: 0.20
+    maneuver_throttle_weight: 0.05
+    disagreement_scale: 3.0
+    kinematic_trust_base: 0.90
+    kinematic_trust_slope: 0.70
+    kinematic_trust_min: 0.20
+    kinematic_trust_max: 0.90
+    q_maneuver_gain: 0.45
+    r_maneuver_gain: 0.20
+    r_disagreement_gain: 1.50
+    r_outlier_multiplier: 2.0
+    fusion_base: 0.58
+    fusion_confidence_gain: 0.10
+    fusion_disagreement_gain: 0.28
+    fusion_covariance_gain: 0.10
+    fusion_min: 0.18
+    fusion_max: 0.72
+    fusion_outlier_cap: 0.28
+
+deployment:
+  # MAVLink连接（HITL：树莓派经 GPIO 串口直连飞控 TELEM2 口）
+  # 飞控侧：USB → 主机/JSBSim；TELEM2 → 树莓派（MAV_1_CONFIG=TELEM2, SER_TEL2_BAUD=921600）
+  mavlink_connection: "/dev/ttyAMA10"  # 树莓派端串口设备名（Pi5 常见 ttyAMA10；若为 ttyAMA0 请改）
+  baudrate: 921600                    # 与飞控 SER_TEL2_BAUD 一致
+  send_wind_cov: true                 # 发送标准MAVLink WIND_COV消息
+  send_named_values: true             # 保留NAMED_VALUE_FLOAT调试输出
+  inference_rate: 50                  # Hz - 推理频率
+  # HITL/MAVLink 下舵面/油门来自 SERVO_OUTPUT_RAW/RC_CHANNELS，其 PWM 尺度与训练 JSBSim
+  # fcs-cmd-norm 差异巨大，直接喂会主导 GRU；此处保持中性填充（归一化后≈0）。默认即为 true，显式写出以便复现。
+  neutralize_ctrl_features: true
+
+  # 每次会话通过 HITL_SESSION_ID / HITL_CONDITION 环境变量写入不可重复的会话标识。
+  hitl_session_id: "must_be_overridden"
+  hitl_condition: "must_be_overridden"
+  # 最终 Pi 5 链路使用 CPU ONNX Runtime。
+  backend: "onnx"                   # onnx | torch | ascend
+  model_path_onnx: "artifacts/pigru_41d_seed26.onnx"
+  onnx_intra_op_threads: 4
+  model_path_torch: "data/revision_main_41d/models/seed26/pigru/best_model.pth"
+  model_path_ascend: "../deploy/pigru_wind.om"
+  ascend_device_id: 0
+  
+  # 推理配置
+  use_gpu: false                      # Pi 5 ONNX CPU
+  batch_inference: false              # 是否批量推理(实时系统建议false)
+  max_latency_ms: 20                  # 最大允许延迟(毫秒)
+  max_wind_speed: 20.0                # 最大风速限制 (m/s)
+  max_inference_time_ms: 50.0         # 最大推理时间 (ms)
+  
+  # EMA平滑配置
+  ema_alpha_wind: 0.2                 # 风速输出EMA系数 (0-1，越小越平滑)
+  ema_alpha_params: 0.1               # α/β EMA系数
+  enable_output_filter: true          # 是否启用输出滤波
+  
+  # 输出滤波（遗留配置，已由ema_alpha_wind替代）
+  output_filter:
+    enabled: true                     # 是否启用输出滤波
+    filter_type: "exponential"        # 滤波器类型: exponential, moving_average
+    alpha: 0.3                        # 指数滤波系数 (0-1, 越小越平滑)
+    window_size: 5                    # 移动平均窗口大小
+
+# 日志配置
+logging:
+  level: "INFO"                       # 日志级别: DEBUG, INFO, WARNING, ERROR
+  save_dir: "../logs/"                # 训练日志保存目录（保留以兼容加载器）
+  # 部署端 CSV(hitl_data_*.csv) 与在线日志(online_deployment_*.log) 的落盘目录。
+  # 6c 读取的是 logging.log_dir（相对项目根解析）；HITL 直接落到归档目录，省去实验后手动拷贝。
+  log_dir: "HITL/logs_in_rasbpi/"
+  tensorboard_dir: "../runs/"         # TensorBoard日志目录
+  console_output: true                # 是否输出到控制台
+  file_output: true                   # 是否输出到文件
+  
+  # 训练日志
+  log_interval: 10                    # 每N个batch打印一次
+  plot_interval: 50                   # 每N轮绘制一次损失曲线
+
+# 验证配置
+validation:
+  val_split: 0.2                      # 验证集比例 (从训练集划分)
+  val_interval: 1                     # 每N轮验证一次
+  metrics:
+    - "mae"                           # 平均绝对误差
+    - "rmse"                          # 均方根误差
+    - "wind_magnitude_error"          # 风速大小误差
+    - "wind_direction_error"          # 风向误差(度)
+
+# 物理约束配置
+physics:
+  # 风速约束
+  wind_magnitude_max: 15.0            # m/s - 最大风速
+  wind_magnitude_min: 0.0             # m/s - 最小风速
+  
+  # 模型输出范围配置
+  angle_limit_deg: 5.0                # 小角修正限幅（度）
+  s_tas_range: [0.9, 1.1]             # 空速尺度因子范围 [lo, hi]
+  qr_scale_range: [0.3, 4.0]          # q_scale/r_scale 输出范围，降低上限防止参数跑飞(原5.12触顶)
+  
+  # 物理损失版本选择
+  use_6dof_physics: false             # 关闭6-DOF，改用简化物理损失，避免梯度不稳定
+  use_attitude_physics: true          # 使用姿态旋转物理损失（v2版本）
+  use_dyn_residual: false             # 阶段3 L_dyn 总开关（默认关闭）；启用需 input_size>=45 + lambda_phys_dyn>0
+                                       # 启用前提：CSV/特征已含 IMU 加速度(42-44)和实际舵面(38-41)
+  
+  # ===== 6-DOF 气动参数 (Rascal110-JSBSim) =====
+  # 质量与几何
+  empty_weight_lbs: 13.0              # JSBSim mass_balance/emptywt
+  fuel_capacity_lbs: 1.5              # JSBSim tank/capacity
+  fuel_fraction: 0.8                  # Rascal110-JSBSim-set.xml
+  uav_mass: 6.44                      # kg - (13 + 1.5 * 0.8) lb
+  wing_area: 0.982                    # m² - 10.57 ft²
+  air_density: 1.225                  # kg/m³ - 标准海平面近似
+
+  # 控制面范围（Rascal110-JSBSim.xml）
+  rascal_use_lookup_tables: true
+  elevator_rad_range: [-0.35, 0.30]
+  elevator_norm_domain: [-0.30, 0.30]
+  aileron_rad_range: [-0.35, 0.35]
+  rudder_rad_range: [-0.35, 0.35]
+
+  # 气动查表（Rascal110-JSBSim.xml）
+  drag_alpha_table_rad: [-1.57, -0.26, 0.0, 0.26, 1.57]
+  drag_alpha_table_values: [1.5, 0.056, 0.028, 0.056, 1.5]
+  drag_beta_table_rad: [-1.57, -0.26, 0.0, 0.26, 1.57]
+  drag_beta_table_values: [1.23, 0.05, 0.0, 0.05, 1.23]
+  drag_induced_factor: 0.04
+  drag_elevator_norm_coeff: 0.03
+  lift_alpha_table_rad: [-0.20, 0.0, 0.23, 0.60]
+  lift_alpha_table_values: [-0.75, 0.25, 1.40, 0.71]
+  C_L_delta_e: 0.20
+  C_C0: 0.0
+  C_C_beta: -1.0
+  C_C_delta_a: 0.0
+
+  # 电机 + 螺旋桨（electrical_engine_1050W.xml + 18x8.xml）
+  engine_power_watts: 1050.0
+  propeller_diameter_m: 0.4572
+  propeller_power_lookup_j_max: 1.0
+  propeller_ct_advance_ratio: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0, 1.4]
+  propeller_ct_values: [0.0776, 0.0744, 0.0712, 0.0655, 0.0588, 0.0518, 0.0419, 0.0318, 0.0172, -0.0058, -0.0549]
+  propeller_cp_advance_ratio: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0, 1.4]
+  propeller_cp_values: [0.0902, 0.0893, 0.0880, 0.0860, 0.0810, 0.0742, 0.0681, 0.0572, 0.0467, 0.0167, -0.0803]
+
+  # 旧多项式参数仅保留给 lookup=false 的回退分支
+  C_D0: 0.0305
+  C_D_alpha: 0.10
+  C_D_alpha_delta_e: 0.12
+  C_D_alpha2: 1.40
+  C_L0: 0.25
+  C_L_alpha: 5.0
+  
+  # 其他物理约束
+  airspeed_consistency_weight: 1.0    # 空速一致性权重: V_air = V_ground - V_wind
+  energy_conservation_weight: 0.5     # 能量守恒权重
+  
+  # 平滑性约束
+  temporal_smoothness_weight: 0.3     # 时间平滑性权重
+  max_wind_change_rate: 5.0           # m/s² - 最大风速变化率
+
+# 调试配置
+debug:
+  enabled: false                      # 是否启用调试模式
+  save_intermediate_outputs: false    # 是否保存中间输出
+  visualize_attention: false          # 是否可视化注意力权重
+  profile_inference: false            # 是否分析推理性能

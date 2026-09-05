@@ -1,0 +1,50 @@
+protocol:
+  name: drones_revision_hitl_v2
+  estimator_rate_hz: 50.0
+  total_duration_s: 350.0
+  warmup_exclusion_s: 20.0
+  minimum_valid_post_warmup_s: 100.0
+  direction_min_horizontal_wind_mps: 0.5
+  required_sessions_per_condition: 5
+  randomized_condition_order: true
+  randomization_seed: 20260826
+
+conditions:
+  id:
+    horizontal_wind_range_mps: [1.0, 3.0]
+    speeds_mps: [1.4, 1.8, 2.2, 2.6, 3.0]
+    directions_deg: [25.0, 95.0, 165.0, 235.0, 305.0]
+    turbulence_gain: 1.0
+    gust_magnitude_mps: 0.0
+  ood:
+    horizontal_wind_range_mps: [4.0, 8.0]
+    speeds_mps: [4.2, 5.0, 5.8, 6.6, 7.4]
+    directions_deg: [55.0, 125.0, 195.0, 265.0, 335.0]
+    turbulence_gain: 1.5
+    gust_magnitude_mps: 0.0
+
+alignment:
+  marker_udp_port: 45880
+  marker_samples_at_start: 20
+  marker_samples_at_end: 20
+  marker_interval_ms: 50
+  marker_timeout_s: 2.0
+  max_clock_uncertainty_ms: 20.0
+  max_truth_match_residual_ms: 50.0
+  minimum_truth_match_ratio: 0.98
+  max_fc_match_residual_ms: 60.0
+  minimum_fc_match_ratio: 0.95
+
+quality:
+  minimum_achieved_loop_hz: 45.0
+  maximum_deadline_miss_ratio: 0.10
+  maximum_nonfinite_ratio: 0.0
+  wind_range_tolerance_mps: 0.01
+  enforce_exact_session_count: true
+
+logging:
+  sessions_root: HITL/sessions
+  pi_csv_name: pi_estimator.csv
+  pc_truth_name: jsbsim_truth.csv
+  fc_ulog_name: px4.ulg
+  aligned_csv_name: aligned.csv

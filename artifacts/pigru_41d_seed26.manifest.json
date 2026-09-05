@@ -1,0 +1,18 @@
+{
+  "checkpoint": "data/revision_main_41d/models/seed_26/pigru/train_lambda0.01_0.03_0.05_0.07_0.09_0.11_0.13_0.15_0.17_0.19_20260826_122334/train_lambda0.1_20260826_122410/best_model.pth",
+  "norm_params": "data/dataset_revision_41d/norm_params.pkl",
+  "onnx": "artifacts/pigru_41d_seed26.onnx",
+  "input_shape": [
+    "batch",
+    100,
+    41
+  ],
+  "opset": 17,
+  "max_absolute_errors": {
+    "wind_estimate": 8.940696716308594e-07,
+    "q_scale": 1.1920928955078125e-06,
+    "r_scale": 7.152557373046875e-07,
+    "angles": 3.958120942115784e-08,
+    "confidence": 5.960464477539063e-08
+  }
+}

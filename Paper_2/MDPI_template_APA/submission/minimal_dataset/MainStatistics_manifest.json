@@ -1,0 +1,23 @@
+{
+  "seeds": [
+    26,
+    42,
+    2024,
+    2025,
+    2026
+  ],
+  "splits": [
+    "test_id",
+    "test_ood"
+  ],
+  "block_length": 256,
+  "bootstrap_replicates": 4000,
+  "random_seed": 260826,
+  "segment_modes": {
+    "test_id": "ordered_sparse_sample_blocks",
+    "test_ood": "ordered_sparse_sample_blocks"
+  },
+  "block_length_unit": "saved samples",
+  "block_length_is_elapsed_time": false,
+  "test_data_used_for_selection": false
+}

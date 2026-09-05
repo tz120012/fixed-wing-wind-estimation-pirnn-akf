@@ -1,0 +1,306 @@
+Element                     Quantity                                                        Reported      Computed  Status
+------------------------------------------------------------------------------------------------------------------------
+Figure 2 / Table 4          ('PX4-EKF2', 'test_id') RMSE                                       0.649         0.649  OK
+Figure 2 / Table 4          ('PX4-EKF2', 'test_id') RMSE SD                                    0.000         0.000  OK
+Figure 2 / Table 4          ('PX4-EKF2', 'test_id') direction MAE                              25.24         25.24  OK
+Figure 2 / Table 4          ('PX4-EKF2', 'test_ood') RMSE                                      1.387         1.387  OK
+Figure 2 / Table 4          ('PX4-EKF2', 'test_ood') RMSE SD                                   0.000         0.000  OK
+Figure 2 / Table 4          ('PX4-EKF2', 'test_ood') direction MAE                             24.12         24.12  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_id') RMSE                                      0.386         0.386  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_id') RMSE SD                                   0.011         0.011  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_id') direction MAE                             13.13         13.13  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_ood') RMSE                                     0.485         0.485  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_ood') RMSE SD                                  0.055         0.055  OK
+Figure 2 / Table 4          ('KalmanNet', 'test_ood') direction MAE                             5.91          5.91  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_id') RMSE                                    0.256         0.256  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_id') RMSE SD                                 0.008         0.008  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_id') direction MAE                            3.82          3.82  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_ood') RMSE                                   0.870         0.870  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_ood') RMSE SD                                0.041         0.041  OK
+Figure 2 / Table 4          ('Vanilla GRU', 'test_ood') direction MAE                           3.22          3.22  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_id') RMSE                                   0.244         0.244  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_id') RMSE SD                                0.005         0.005  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_id') direction MAE                           3.75          3.75  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_ood') RMSE                                  0.813         0.813  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_ood') RMSE SD                               0.027         0.027  OK
+Figure 2 / Table 4          ('Vanilla LSTM', 'test_ood') direction MAE                          4.19          4.19  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_id') RMSE                                         0.208         0.208  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_id') RMSE SD                                      0.003         0.003  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_id') direction MAE                                 3.22          3.22  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_ood') RMSE                                        0.546         0.546  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_ood') RMSE SD                                     0.007         0.007  OK
+Figure 2 / Table 4          ('PI-GRU', 'test_ood') direction MAE                                1.94          1.94  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_id') RMSE                                      0.215         0.215  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_id') RMSE SD                                   0.003         0.003  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_id') direction MAE                              3.29          3.29  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_ood') RMSE                                     0.544         0.544  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_ood') RMSE SD                                  0.007         0.007  OK
+Figure 2 / Table 4          ('PIRNN-AKF', 'test_ood') direction MAE                             1.97          1.97  OK
+Figure 2 source             ('KalmanNet', 'test_id') per-seed mean                       0.386027031   0.386027031  OK
+Figure 2 source             ('KalmanNet', 'test_id') per-seed SD                         0.010753923   0.010753923  OK
+Figure 2 source             ('KalmanNet', 'test_ood') per-seed mean                      0.485337974   0.485337974  OK
+Figure 2 source             ('KalmanNet', 'test_ood') per-seed SD                        0.054877368   0.054877368  OK
+Figure 2 source             ('PI-GRU', 'test_id') per-seed mean                          0.208453234   0.208453234  OK
+Figure 2 source             ('PI-GRU', 'test_id') per-seed SD                            0.002840384   0.002840384  OK
+Figure 2 source             ('PI-GRU', 'test_ood') per-seed mean                         0.546218859   0.546218859  OK
+Figure 2 source             ('PI-GRU', 'test_ood') per-seed SD                           0.007380319   0.007380319  OK
+Figure 2 source             ('PIRNN-AKF', 'test_id') per-seed mean                       0.215158710   0.215158710  OK
+Figure 2 source             ('PIRNN-AKF', 'test_id') per-seed SD                         0.002589242   0.002589242  OK
+Figure 2 source             ('PIRNN-AKF', 'test_ood') per-seed mean                      0.544494378   0.544494378  OK
+Figure 2 source             ('PIRNN-AKF', 'test_ood') per-seed SD                        0.007033116   0.007033116  OK
+Figure 2 source             ('Vanilla GRU', 'test_id') per-seed mean                     0.255849942   0.255849942  OK
+Figure 2 source             ('Vanilla GRU', 'test_id') per-seed SD                       0.007732693   0.007732693  OK
+Figure 2 source             ('Vanilla GRU', 'test_ood') per-seed mean                    0.870415732   0.870415732  OK
+Figure 2 source             ('Vanilla GRU', 'test_ood') per-seed SD                      0.040598752   0.040598752  OK
+Figure 2 source             ('Vanilla LSTM', 'test_id') per-seed mean                    0.243928826   0.243928826  OK
+Figure 2 source             ('Vanilla LSTM', 'test_id') per-seed SD                      0.005461623   0.005461623  OK
+Figure 2 source             ('Vanilla LSTM', 'test_ood') per-seed mean                   0.813127006   0.813127006  OK
+Figure 2 source             ('Vanilla LSTM', 'test_ood') per-seed SD                     0.026766813   0.026766813  OK
+KalmanNet raw source        test_id seed 26 RMSE                                           0.3949689     0.3949689  OK
+KalmanNet raw source        test_id seed 26 direction MAE                                 13.2152585    13.2152586  OK
+KalmanNet raw source        test_id seed 42 RMSE                                           0.3768399     0.3768399  OK
+KalmanNet raw source        test_id seed 42 direction MAE                                 13.2037427    13.2037429  OK
+KalmanNet raw source        test_id seed 2024 RMSE                                         0.3722281     0.3722281  OK
+KalmanNet raw source        test_id seed 2024 direction MAE                               12.9274943    12.9274947  OK
+KalmanNet raw source        test_id seed 2025 RMSE                                         0.3951936     0.3951936  OK
+KalmanNet raw source        test_id seed 2025 direction MAE                               13.2065061    13.2065065  OK
+KalmanNet raw source        test_id seed 2026 RMSE                                         0.3909047     0.3909047  OK
+KalmanNet raw source        test_id seed 2026 direction MAE                               13.1057280    13.1057285  OK
+KalmanNet raw source        test_ood seed 26 RMSE                                          0.4134555     0.4134555  OK
+KalmanNet raw source        test_ood seed 26 direction MAE                                 5.9499474     5.9499468  OK
+KalmanNet raw source        test_ood seed 42 RMSE                                          0.4601951     0.4601951  OK
+KalmanNet raw source        test_ood seed 42 direction MAE                                 5.9268368     5.9268362  OK
+KalmanNet raw source        test_ood seed 2024 RMSE                                        0.4857625     0.4857625  OK
+KalmanNet raw source        test_ood seed 2024 direction MAE                               5.8848037     5.8848032  OK
+KalmanNet raw source        test_ood seed 2025 RMSE                                        0.5055242     0.5055242  OK
+KalmanNet raw source        test_ood seed 2025 direction MAE                               5.9100662     5.9100658  OK
+KalmanNet raw source        test_ood seed 2026 RMSE                                        0.5617526     0.5617526  OK
+KalmanNet raw source        test_ood seed 2026 direction MAE                               5.8943108     5.8943104  OK
+Results                     PI-GRU OOD reduction (%)                                            37.2          37.2  OK
+Results                     PIRNN-AKF OOD reduction (%)                                         37.4          37.4  OK
+Main statistics             Test-OOD PIRNN-AKF vs PI-GRU paired-window p-value                 0.485         0.485  OK
+Table 5                     ('ID wind', 'PI-GRU') rmse_3d_mean_mps                             0.756         0.756  OK
+Table 5                     ('ID wind', 'PI-GRU') rmse_3d_sd_mps                               0.077         0.077  OK
+Table 5                     ('ID wind', 'PI-GRU') direction_mae_mean_deg                       19.40         19.40  OK
+Table 5                     ('ID wind', 'PI-GRU') direction_mae_sd_deg                          7.75          7.75  OK
+Table 5                     ('ID wind', 'PI-GRU') closure_rmse_mean_mps                        0.693         0.693  OK
+Table 5                     ('ID wind', 'PI-GRU') closure_rmse_sd_mps                          0.040         0.040  OK
+Table 5                     ('ID wind', 'PI-GRU') jitter_mean_mps                            0.00206       0.00206  OK
+Table 5                     ('ID wind', 'PI-GRU') jitter_sd_mps                              0.00012       0.00012  OK
+Table 5 source              ('ID wind', 'PI-GRU') rmse_3d_mps mean                       0.755910697   0.755910697  OK
+Table 5 source              ('ID wind', 'PI-GRU') rmse_3d_mps SD                         0.076955969   0.076955969  OK
+Table 5 source              ('ID wind', 'PI-GRU') direction_mae_deg mean                19.402881081  19.402881081  OK
+Table 5 source              ('ID wind', 'PI-GRU') direction_mae_deg SD                   7.754747721   7.754747721  OK
+Table 5 source              ('ID wind', 'PI-GRU') jitter_mps mean                        0.002064391   0.002064391  OK
+Table 5 source              ('ID wind', 'PI-GRU') jitter_mps SD                          0.000117983   0.000117983  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') rmse_3d_mean_mps                          0.751         0.751  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') rmse_3d_sd_mps                            0.077         0.077  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') direction_mae_mean_deg                    19.21         19.21  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') direction_mae_sd_deg                       7.77          7.77  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') closure_rmse_mean_mps                     0.686         0.686  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') closure_rmse_sd_mps                       0.039         0.039  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') jitter_mean_mps                         0.00154       0.00154  OK
+Table 5                     ('ID wind', 'PIRNN-AKF') jitter_sd_mps                           0.00008       0.00008  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') rmse_3d_mps mean                    0.751399986   0.751399986  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') rmse_3d_mps SD                      0.076927883   0.076927883  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') direction_mae_deg mean             19.213687013  19.213687013  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') direction_mae_deg SD                7.771578749   7.771578749  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') jitter_mps mean                     0.001536134   0.001536134  OK
+Table 5 source              ('ID wind', 'PIRNN-AKF') jitter_mps SD                       0.000080528   0.000080528  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') rmse_3d_mean_mps                  0.602         0.602  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') rmse_3d_sd_mps                    0.065         0.065  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') direction_mae_mean_deg            10.01         10.01  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') direction_mae_sd_deg               1.30          1.30  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') closure_rmse_mean_mps             0.664         0.664  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') closure_rmse_sd_mps               0.079         0.079  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') jitter_mean_mps                 0.00158       0.00158  OK
+Table 5                     ('Stronger wind/gust', 'PI-GRU') jitter_sd_mps                   0.00008       0.00008  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') rmse_3d_mps mean            0.601856698   0.601856698  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') rmse_3d_mps SD              0.064988466   0.064988466  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') direction_mae_deg mean     10.012354701  10.012354701  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') direction_mae_deg SD        1.299232884   1.299232884  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') jitter_mps mean             0.001578722   0.001578722  OK
+Table 5 source              ('Stronger wind/gust', 'PI-GRU') jitter_mps SD               0.000076894   0.000076894  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') rmse_3d_mean_mps               0.599         0.599  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') rmse_3d_sd_mps                 0.065         0.065  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') direction_mae_mean_deg          9.96          9.96  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') direction_mae_sd_deg            1.29          1.29  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') closure_rmse_mean_mps          0.655         0.655  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') closure_rmse_sd_mps            0.078         0.078  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') jitter_mean_mps              0.00116       0.00116  OK
+Table 5                     ('Stronger wind/gust', 'PIRNN-AKF') jitter_sd_mps                0.00005       0.00005  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') rmse_3d_mps mean         0.599248092   0.599248092  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') rmse_3d_mps SD           0.064969346   0.064969346  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') direction_mae_deg mean   9.956641740   9.956641740  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') direction_mae_deg SD     1.289567491   1.289567491  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') jitter_mps mean          0.001162236   0.001162236  OK
+Table 5 source              ('Stronger wind/gust', 'PIRNN-AKF') jitter_mps SD            0.000053222   0.000053222  OK
+Figure 3 / Table 6          direction MAE at lambda=0.09                                        3.75          3.75  OK
+Figure 3 / Table 6          closure RMSE at lambda=0.13                                        0.345         0.345  OK
+Table 7                     row 1 ID RMSE                                                      0.221         0.221  OK
+Table 7                     row 1 OOD RMSE                                                     0.574         0.574  OK
+Table 7                     row 2 ID RMSE                                                      0.210         0.210  OK
+Table 7                     row 2 OOD RMSE                                                     0.558         0.558  OK
+Table 7                     row 3 ID RMSE                                                      0.223         0.223  OK
+Table 7                     row 3 OOD RMSE                                                     0.610         0.610  OK
+Figure 4 / Table 8          row 1 RMSE                                                         0.188         0.188  OK
+Figure 4 / Table 8          row 1 direction P95                                                20.36         20.36  OK
+Figure 4 / Table 8          row 1 collapse (%)                                                  0.50          0.50  OK
+Figure 4 / Table 8          row 2 RMSE                                                         0.176         0.176  OK
+Figure 4 / Table 8          row 2 direction P95                                                20.20         20.20  OK
+Figure 4 / Table 8          row 2 collapse (%)                                                  0.24          0.24  OK
+Table 9                     PI-GRU id_rmse_mps                                                0.2048        0.2048  OK
+Table 9                     PI-GRU id_jitter_mps                                            0.002694      0.002694  OK
+Table 9                     PI-GRU ood_rmse_mps                                               0.5393        0.5393  OK
+Table 9                     PI-GRU ood_jitter_mps                                           0.002465      0.002465  OK
+Table 9                     PI-GRU ood_max_jump_mps                                           0.1581        0.1581  OK
+Table 9                     Fixed EMA (alpha=1.0) id_rmse_mps                                 0.2048        0.2048  OK
+Table 9                     Fixed EMA (alpha=1.0) id_jitter_mps                             0.002694      0.002694  OK
+Table 9                     Fixed EMA (alpha=1.0) ood_rmse_mps                                0.5393        0.5393  OK
+Table 9                     Fixed EMA (alpha=1.0) ood_jitter_mps                            0.002465      0.002465  OK
+Table 9                     Fixed EMA (alpha=1.0) ood_max_jump_mps                            0.1581        0.1581  OK
+Table 9                     Confidence complementary id_rmse_mps                              0.2049        0.2049  OK
+Table 9                     Confidence complementary id_jitter_mps                          0.002120      0.002120  OK
+Table 9                     Confidence complementary ood_rmse_mps                             0.5393        0.5393  OK
+Table 9                     Confidence complementary ood_jitter_mps                         0.001970      0.001970  OK
+Table 9                     Confidence complementary ood_max_jump_mps                         0.1571        0.1571  OK
+Table 9                     Fixed-covariance KF id_rmse_mps                                   0.2049        0.2049  OK
+Table 9                     Fixed-covariance KF id_jitter_mps                               0.001890      0.001890  OK
+Table 9                     Fixed-covariance KF ood_rmse_mps                                  0.5393        0.5393  OK
+Table 9                     Fixed-covariance KF ood_jitter_mps                              0.001768      0.001768  OK
+Table 9                     Fixed-covariance KF ood_max_jump_mps                              0.1566        0.1566  OK
+Table 9                     PIRNN-AKF id_rmse_mps                                             0.2116        0.2116  OK
+Table 9                     PIRNN-AKF id_jitter_mps                                         0.002051      0.002051  OK
+Table 9                     PIRNN-AKF ood_rmse_mps                                            0.5360        0.5360  OK
+Table 9                     PIRNN-AKF ood_jitter_mps                                        0.001855      0.001855  OK
+Table 9                     PIRNN-AKF ood_max_jump_mps                                        0.1473        0.1473  OK
+Table 9                     OOD jitter reduction (%, rounded inputs)                            24.8          24.8  OK
+Table 9                     OOD max-jump reduction (%)                                           6.8           6.8  OK
+Table 9 raw source          PI-GRU test_id RMSE                                          0.204842577   0.204842577  OK
+Table 9 raw source          PI-GRU test_id jitter                                        0.002693987   0.002693987  OK
+Table 9 raw source          PI-GRU test_ood RMSE                                         0.539263624   0.539263624  OK
+Table 9 raw source          PI-GRU test_ood jitter                                       0.002465360   0.002465360  OK
+Table 9 raw source          PI-GRU test_ood max jump                                     0.158132667   0.158132667  OK
+Table 9 raw source          Fixed EMA (alpha=1.0) test_id RMSE                           0.204842577   0.204842577  OK
+Table 9 raw source          Fixed EMA (alpha=1.0) test_id jitter                         0.002693987   0.002693987  OK
+Table 9 raw source          Fixed EMA (alpha=1.0) test_ood RMSE                          0.539263624   0.539263624  OK
+Table 9 raw source          Fixed EMA (alpha=1.0) test_ood jitter                        0.002465360   0.002465360  OK
+Table 9 raw source          Fixed EMA (alpha=1.0) test_ood max jump                      0.158132667   0.158132667  OK
+Table 9 raw source          Confidence complementary test_id RMSE                        0.204870371   0.204870371  OK
+Table 9 raw source          Confidence complementary test_id jitter                      0.002119831   0.002119831  OK
+Table 9 raw source          Confidence complementary test_ood RMSE                       0.539287093   0.539287093  OK
+Table 9 raw source          Confidence complementary test_ood jitter                     0.001969967   0.001969967  OK
+Table 9 raw source          Confidence complementary test_ood max jump                   0.157077369   0.157077369  OK
+Table 9 raw source          Fixed-covariance KF test_id RMSE                             0.204886211   0.204886211  OK
+Table 9 raw source          Fixed-covariance KF test_id jitter                           0.001889825   0.001889825  OK
+Table 9 raw source          Fixed-covariance KF test_ood RMSE                            0.539303919   0.539303919  OK
+Table 9 raw source          Fixed-covariance KF test_ood jitter                          0.001768364   0.001768364  OK
+Table 9 raw source          Fixed-covariance KF test_ood max jump                        0.156553691   0.156553691  OK
+Table 9 raw source          PIRNN-AKF test_id RMSE                                       0.211565929   0.211565929  OK
+Table 9 raw source          PIRNN-AKF test_id jitter                                     0.002051119   0.002051119  OK
+Table 9 raw source          PIRNN-AKF test_ood RMSE                                      0.535976070   0.535976070  OK
+Table 9 raw source          PIRNN-AKF test_ood jitter                                    0.001854849   0.001854849  OK
+Table 9 raw source          PIRNN-AKF test_ood max jump                                  0.147345096   0.147345096  OK
+AKF sensitivity             ID RMSE minimum                                                    0.209         0.209  OK
+AKF sensitivity             ID RMSE maximum                                                    0.214         0.214  OK
+AKF sensitivity             OOD RMSE minimum                                                   0.535         0.535  OK
+AKF sensitivity             OOD RMSE maximum                                                   0.537         0.537  OK
+AKF sensitivity             maximum jump increase (%)                                           37.2          37.2  OK
+AKF sensitivity raw source  row count                                                             48            48  OK
+AKF sensitivity raw source  test_id RMSE minimum                                         0.208678716   0.208678716  OK
+AKF sensitivity raw source  test_id RMSE maximum                                         0.214333745   0.214333745  OK
+AKF sensitivity raw source  test_ood RMSE minimum                                        0.534876306   0.534876306  OK
+AKF sensitivity raw source  test_ood RMSE maximum                                        0.537164137   0.537164137  OK
+AKF sensitivity raw source  maximum OOD jump increase                                     37.1992896    37.1992896  OK
+Figure 6 / Table 10         PI-GRU (Raw) RMSE                                                  0.585         0.585  OK
+Figure 6 / Table 10         PI-GRU (Raw) jitter                                               0.0511        0.0511  OK
+Figure 6 / Table 10         EMA a=0.1 RMSE                                                     0.806         0.806  OK
+Figure 6 / Table 10         EMA a=0.1 jitter                                                  0.0046        0.0046  OK
+Figure 6 / Table 10         EMA a=0.5 RMSE                                                     0.609         0.609  OK
+Figure 6 / Table 10         EMA a=0.5 jitter                                                  0.0233        0.0233  OK
+Figure 6 / Table 10         EMA a=0.9 RMSE                                                     0.587         0.587  OK
+Figure 6 / Table 10         EMA a=0.9 jitter                                                  0.0448        0.0448  OK
+Figure 6 / Table 10         PIRNN-AKF RMSE                                                     0.585         0.585  OK
+Figure 6 / Table 10         PIRNN-AKF jitter                                                  0.0433        0.0433  OK
+Figure 5                    rows                                                                1000          1000  OK
+Figure 5                    sampling interval                                                   0.02          0.02  OK
+Figure 5                    anomaly start                                                       9.00          9.00  OK
+Figure 5                    anomaly end                                                        11.00         11.00  OK
+Figure 8                    Test-ID rows                                                       60369         60369  OK
+Figure 8                    Test-ID RMSE                                                       0.226         0.226  OK
+Figure 8                    Test-OOD rows                                                      42574         42574  OK
+Figure 8                    Test-OOD RMSE                                                      0.570         0.570  OK
+Table 11                    id sessions                                                            5             5  OK
+Table 11                    id post_warmup_rows mean                                           25188         25188  OK
+Table 11                    id post_warmup_rows SD                                               778           778  OK
+Table 11                    id rmse_n_mps mean                                                 0.614         0.614  OK
+Table 11                    id rmse_n_mps SD                                                   0.081         0.081  OK
+Table 11                    id rmse_e_mps mean                                                 0.760         0.760  OK
+Table 11                    id rmse_e_mps SD                                                   0.102         0.102  OK
+Table 11                    id rmse_d_mps mean                                                 0.109         0.109  OK
+Table 11                    id rmse_d_mps SD                                                   0.007         0.007  OK
+Table 11                    id rmse_3d_mps mean                                                0.569         0.569  OK
+Table 11                    id rmse_3d_mps SD                                                  0.054         0.054  OK
+Table 11                    id direction_mae_deg mean                                           19.0          19.0  OK
+Table 11                    id direction_mae_deg SD                                              6.0           6.0  OK
+Table 11                    id magnitude_ratio mean                                            0.967         0.967  OK
+Table 11                    id magnitude_ratio SD                                              0.118         0.118  OK
+Table 11                    id inference_latency_mean_ms mean                                   9.62          9.62  OK
+Table 11                    id inference_latency_mean_ms SD                                     0.32          0.32  OK
+Table 11                    id inference_latency_p95_ms mean                                    18.3          18.3  OK
+Table 11                    id inference_latency_p95_ms SD                                       0.4           0.4  OK
+Table 11                    id companion_latency_mean_ms mean                                  12.18         12.18  OK
+Table 11                    id companion_latency_mean_ms SD                                     0.39          0.39  OK
+Table 11                    id companion_latency_p95_ms mean                                    20.3          20.3  OK
+Table 11                    id companion_latency_p95_ms SD                                       0.5           0.5  OK
+Table 11                    id loop_hz mean                                                     83.2          83.2  OK
+Table 11                    id loop_hz SD                                                        2.0           2.0  OK
+Table 11                    id deadline_miss_ratio mean                                          5.5           5.5  OK
+Table 11                    id deadline_miss_ratio SD                                            0.7           0.7  OK
+Table 11                    ood sessions                                                           5             5  OK
+Table 11                    ood post_warmup_rows mean                                          25047         25047  OK
+Table 11                    ood post_warmup_rows SD                                              616           616  OK
+Table 11                    ood rmse_n_mps mean                                                0.945         0.945  OK
+Table 11                    ood rmse_n_mps SD                                                  0.637         0.637  OK
+Table 11                    ood rmse_e_mps mean                                                0.948         0.948  OK
+Table 11                    ood rmse_e_mps SD                                                  0.496         0.496  OK
+Table 11                    ood rmse_d_mps mean                                                0.085         0.085  OK
+Table 11                    ood rmse_d_mps SD                                                  0.014         0.014  OK
+Table 11                    ood rmse_3d_mps mean                                               0.832         0.832  OK
+Table 11                    ood rmse_3d_mps SD                                                 0.318         0.318  OK
+Table 11                    ood direction_mae_deg mean                                          6.19          6.19  OK
+Table 11                    ood direction_mae_deg SD                                            2.46          2.46  OK
+Table 11                    ood magnitude_ratio mean                                           0.818         0.818  OK
+Table 11                    ood magnitude_ratio SD                                             0.096         0.096  OK
+Table 11                    ood inference_latency_mean_ms mean                                  9.69          9.69  OK
+Table 11                    ood inference_latency_mean_ms SD                                    0.25          0.25  OK
+Table 11                    ood inference_latency_p95_ms mean                                   18.6          18.6  OK
+Table 11                    ood inference_latency_p95_ms SD                                      0.5           0.5  OK
+Table 11                    ood companion_latency_mean_ms mean                                 12.26         12.26  OK
+Table 11                    ood companion_latency_mean_ms SD                                    0.31          0.31  OK
+Table 11                    ood companion_latency_p95_ms mean                                   20.5          20.5  OK
+Table 11                    ood companion_latency_p95_ms SD                                      0.5           0.5  OK
+Table 11                    ood loop_hz mean                                                    83.2          83.2  OK
+Table 11                    ood loop_hz SD                                                       1.4           1.4  OK
+Table 11                    ood deadline_miss_ratio mean                                         5.8           5.8  OK
+Table 11                    ood deadline_miss_ratio SD                                           0.8           0.8  OK
+HITL aggregate              session count                                                         10            10  OK
+HITL aggregate              inference mean (ms)                                                 9.65          9.65  OK
+HITL aggregate              companion mean (ms)                                                12.22         12.22  OK
+HITL aggregate              companion p95 (ms)                                                  20.4          20.4  OK
+HITL aggregate              loop rate (Hz)                                                      83.2          83.2  OK
+HITL aggregate              deadline misses (%)                                                  5.6           5.6  OK
+Figure 7                    post-warm-up rows                                                 251176        251176  OK
+Figure 7                    session count                                                         10            10  OK
+Table A1                    AKF fixed Q/R RMSE                                                 0.596         0.596  OK
+Table A1                    AKF fixed Q/R jitter                                              0.0730        0.0730  OK
+Table A1                    AKF dynamic Q only RMSE                                            0.596         0.596  OK
+Table A1                    AKF dynamic Q only jitter                                         0.0730        0.0730  OK
+Table A1                    AKF dynamic R only RMSE                                            0.601         0.601  OK
+Table A1                    AKF dynamic R only jitter                                         0.0712        0.0712  OK
+Table A1                    AKF dynamic Q/R RMSE                                               0.601         0.601  OK
+Table A1                    AKF dynamic Q/R jitter                                            0.0712        0.0712  OK
+Table B1 / Figure B1        PIRNN-AKF jitter reduction (%)                                      21.5          21.5  OK
+Figure D1                   GPS-8 PIRNN-AKF RMSE                                               0.715         0.715  OK
+------------------------------------------------------------------------------------------------------------------------
+302 checks agree, 0 differ.

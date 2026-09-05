@@ -1,0 +1,7 @@
+functional_group,item,nominal_setting
+Prediction increment,gain/component clip,0.25 / +/-1 m/s
+Maneuver score,gyro/acceleration/control/throttle weights,0.45/0.30/0.20/0.05
+Disagreement shrinkage,scale/trust range,"3.0 m/s / [0.20,0.90]"
+Innovation gate,squared Mahalanobis threshold,9.0
+Dynamic-R modulation,maneuver/disagreement/outlier,0.20/1.50/2.0
+Final fusion weight,formula/range/outlier cap,"0.58+0.10c-0.28d-0.10u / [0.18,0.72] / 0.28"

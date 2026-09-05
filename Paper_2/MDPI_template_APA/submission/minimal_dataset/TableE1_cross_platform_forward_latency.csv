@@ -1,0 +1,7 @@
+platform,compute_type,inference_backend,mean_per_step_latency_ms,p95_per_step_latency_ms,throughput_hz
+Orange Pi AI Pro 20T,NPU,torch-npu,6.23,7.54,160
+Orange Pi AI Pro 20T,NPU,Ascend OM (natively compiled),0.91,0.96,1094
+Raspberry Pi 5 (BCM2712),CPU,PyTorch,15.54,15.57,64
+Raspberry Pi 5 (BCM2712),CPU,ONNX Runtime,0.88,0.89,1131
+NVIDIA RTX 4060,Desktop GPU,PyTorch,1.47,1.66,679
+NVIDIA RTX 4060,Desktop GPU,TorchScript,1.18,1.84,850

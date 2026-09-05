@@ -1,0 +1,15 @@
+parameter,value,unit,note
+wind_north_fps,8.2000,ft/s,JSBSim wind_config preset steady_indist
+wind_east_fps,4.9200,ft/s,JSBSim wind_config preset steady_indist
+wind_down_fps,0.0000,ft/s,JSBSim wind_config preset steady_indist
+wind_north_reference,2.4994,m/s,8.2000 ft/s x 0.3048; reference truth for the RMSE of column 3
+wind_east_reference,1.4996,m/s,4.9200 ft/s x 0.3048; reference truth for the RMSE of column 3
+wind_down_reference,0.0000,m/s,reference truth for the RMSE of column 3
+wind_horizontal_magnitude,2.9146,m/s,sqrt(2.4994^2 + 1.4996^2); denominator of the magnitude ratio
+turbulence_gain,0.30,-,JSBSim turbulence gain applied on top of the steady vector
+turbulence_type,3,-,JSBSim turbulence model identifier
+warmup_exclusion,20.0,s,frames with runtime_s < 20 are excluded from the reported accuracy
+frames_total,2823,-,rows in Table08_online_session_indistribution_perframe.csv
+frames_after_warmup,2370,-,rows used for the reported accuracy of column 3
+airspeed_trim,14.0,m/s,PX4 parameter FW_AIRSPD_TRIM for this session
+session_duration,94.03,s,span of runtime_s in the per-frame file

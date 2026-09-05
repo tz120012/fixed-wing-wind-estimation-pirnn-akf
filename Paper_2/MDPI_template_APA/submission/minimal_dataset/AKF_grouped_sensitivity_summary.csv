@@ -1,0 +1,5 @@
+quantity,unit,observed_min,observed_max,nominal,scope,provenance
+Test-ID RMSE,m/s,0.2086787162220481,0.2143337454792838,0.211565928797321,"all six groups, multipliers 0.6/0.8/1.2/1.4",data/revision_akf/akf_sensitivity_and_baselines.csv
+Test-OOD RMSE,m/s,0.5348763059524838,0.5371641365088922,0.535976070028347,"all six groups, multipliers 0.6/0.8/1.2/1.4",data/revision_akf/akf_sensitivity_and_baselines.csv
+Maximum OOD jump increase,%,0.0,37.19928958753045,0.0,largest change: final_fusion_weight at x1.4,data/revision_akf/akf_sensitivity_and_baselines.csv
+Mahalanobis-gate effect,maximum absolute metric change,0.0,0.0,0.0,gate not activated in retained sessions,data/revision_akf/akf_sensitivity_and_baselines.csv

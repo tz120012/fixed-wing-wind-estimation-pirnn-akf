@@ -1,0 +1,21 @@
+pc:
+  px4_root: /path/to/PX4-Autopilot
+  hitl_serial_device: /dev/ttyACM0
+  hitl_baudrate: 921600
+  model: rascal
+  world: LSZH
+  headless: true
+
+pi:
+  project_root: /opt/wind-estimation-main
+  telem_serial_device: /dev/ttyAMA10
+  telem_baudrate: 921600
+  listen_address: 0.0.0.0
+  pc_address: 192.0.2.10
+  model_path: HITL/revision_protocol/model.onnx
+  norm_params_path: HITL/revision_protocol/norm_params.pkl
+  deployment_config: HITL/revision_protocol/config_hitl_frozen.yaml
+
+clock:
+  require_ntp_synchronized: true
+  chrony_command: chronyc tracking

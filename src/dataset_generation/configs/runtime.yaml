@@ -1,0 +1,65 @@
+# 数据采集运行期参数（sleep / timeout / retry / threshold / port）
+#
+# 所有这里的值在重构前散落于 generate_dataset.py、data_logger.py、flight_controller.py。
+# 集中后修改无需翻代码；增加新字段时同步更新 lib/config/runtime.py 的 dataclass。
+# 单位说明：以 _s 结尾为秒，_ms 毫秒，_us 微秒。
+
+sleeps:
+  px4_post_start_s: 20            # PX4 SITL 启动后的初始等待
+  ekf_warmup_s: 10                # EKF 收敛等待
+  between_segments_s: 2           # 单 sortie 内段间间隔
+  between_sorties_s: 6            # 跨 sortie 间隔
+  pkill_grace_s: 3                # pkill 后给操作系统的清理时间
+  cleanup_post_stop_s: 4          # stop_px4_sitl 末尾的兜底等待
+  pre_sortie_warmup_s: 2          # _prepare_sortie 前置 sleep
+  segment_retry_backoff_s: 3      # 段级网络/采样重试间隔
+
+retries:
+  mavsdk_connect: 10              # FlightController.connect retries
+  arm: 6                          # arm 最大尝试次数
+  takeoff: 8                      # takeoff 最大尝试次数
+  segment_sample: 2               # 单段采样失败重启 sortie 的次数
+  sortie_prepare: 3               # sortie 准备（写风场+启动SITL+起飞）整体最多尝试次数
+                                  # 用于 SITL 偶发停滞（jsbsim/PX4 仿真异常）的自动恢复
+  jsbsim_verify: 3                # _verify_jsbsim_running max_retries
+  gps_verify: 3                   # _verify_gps_data max_retries
+
+timeouts:
+  px4_terminate_s: 5              # SIGTERM 后等待
+  px4_kill_wait_s: 3              # SIGKILL 后等待
+  pkill_timeout_s: 2              # subprocess.run(pkill) 超时
+  mavsdk_health_s: 2              # check_connection_health 超时
+  arm_check_s: 30                 # _wait_until_armable
+  local_position_s: 150           # _wait_local_position_valid
+  takeoff_total_s: 120            # 起飞监控总时长
+  round_total_s: 1800             # 单轮（5 段）总超时
+  gps_subscribe_s: 5              # _verify_gps_data 单次订阅超时
+  bridge_ready_s: 30              # JSBSim bridge 就绪等待
+  airspeed_ready_s: 60            # 起飞前等待 airspeed_selector 输出有限值（60s 给 SITL 充分收敛时间）
+  airspeed_stable_s: 3            # airspeed 连续保持有限的最短时长
+  position_stream_max_failures: 30  # 起飞监控期 NED 流连续失败上限（秒级，每秒 1 次）
+  climb_descent_event_grace_s: 8.0  # climb_descent 事件超时后的兜底缓冲
+
+quality_gates:
+  min_valid_log_hz: 8.0           # 最低采样频率
+  min_samples_floor: 80           # 最少有效记录数
+  min_coverage_ratio: 0.6         # 有效覆盖时长比例
+  min_coverage_floor_s: 5.0       # 最少有效覆盖时长
+  airspeed_filled_ratio_threshold: 0.05  # airspeed 前向填充上限
+  target_stale_us: 200000         # 目标量 stale 阈值（200ms）
+  wind_truth_align_window_us: 500000     # wind_truth 最近邻对齐窗口（500ms）
+
+ports:
+  mavsdk_udp: 14540               # PX4 -> mavsdk_server
+  mavsdk_grpc: 50051              # mavsdk_server -> Python SDK
+  pymavlink_udp: 14550            # 直连原始 MAVLink 订阅
+  jsbsim_bridge: 4560             # JSBSim HIL bridge（PX4 ↔ jsbsim_bridge mavlink TCP）
+  jsbsim_telnet: 6789             # JSBSim 独立 Telnet/Socket 端口
+                                  # （需要在 Rascal110-JSBSim.xml 加 <output type="SOCKET" port="6789"/>
+                                  #   才能真正启用；否则 data_logger 会回退到 actuator_control_target）
+
+logging:
+  runtime_jsonl_path: "logs/runtime.jsonl"
+  failure_jsonl_path: "logs/segment_failures.jsonl"
+  console_level: "INFO"           # DEBUG | INFO | WARNING | ERROR
+  jsonl_level: "DEBUG"

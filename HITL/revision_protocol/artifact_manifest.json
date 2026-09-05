@@ -1,0 +1,58 @@
+{
+  "artifacts": {
+    "campaign_frozen.yaml": {
+      "path": "HITL/revision_protocol/campaign_frozen.yaml",
+      "sha256": "22f99609593ef78bb728da5ca40bdab36d168fff32b91acbce4738694bb9d24f",
+      "size_bytes": 1331
+    },
+    "config_hitl_frozen.yaml": {
+      "path": "HITL/revision_protocol/config_hitl_frozen.yaml",
+      "sha256": "a2eaabaef3222a98c17e76e125f90644b504f0ffe3cb2192a24f561d1bc51c03",
+      "size_bytes": 20962
+    },
+    "model.onnx": {
+      "path": "HITL/revision_protocol/model.onnx",
+      "sha256": "e8f810914a6d0e0dd2d47599eea0cb59904ddbbf3ff82e374e2b1048aecf44d2",
+      "size_bytes": 855114
+    },
+    "norm_params.pkl": {
+      "path": "HITL/revision_protocol/norm_params.pkl",
+      "sha256": "36b62438e48719e442158acc53ed34a884430e17423bc2d7304eeb2a9eef4208",
+      "size_bytes": 6162
+    }
+  },
+  "created_utc": "2026-08-27T23:45:05.478860+00:00",
+  "hostname": "Hi5090",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+  "python": "3.13.13",
+  "schema_version": 1,
+  "validations": {
+    "deployment": {
+      "backend": "onnx",
+      "inference_rate": 50.0,
+      "input_size": 41,
+      "sequence_length": 100
+    },
+    "normalization": {
+      "scaler_x_features": 41
+    },
+    "onnx": {
+      "input_name": "features",
+      "input_shape": [
+        "batch",
+        "100",
+        "41"
+      ],
+      "outputs": [
+        "wind_estimate",
+        "q_scale",
+        "r_scale",
+        "angles",
+        "confidence"
+      ],
+      "providers": [
+        "CPUExecutionProvider"
+      ]
+    }
+  }
+}

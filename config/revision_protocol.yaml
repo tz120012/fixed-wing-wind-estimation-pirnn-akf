@@ -1,0 +1,89 @@
+# Frozen protocol for the Drones major revision.
+# This file is the preregistered source of truth for all new revision experiments.
+
+protocol:
+  name: drones_major_revision_v1
+  frozen_date: "2026-08-26"
+  manuscript_source: "Paper_2/MDPI_template_APA/Local_3D_Wind_Estimation_Fixed-Wing_UAV_PIGRU_AKF.tex"
+  tuning_policy: "validation_only"
+  test_sets_locked: true
+  prohibit_test_time_retuning: true
+
+features:
+  source_dimension: 45
+  final_dimension: 41
+  removed_group: "actuator_proxy"
+  removed_source_indices: [38, 39, 40, 41]
+  kept_source_ranges:
+    - [0, 37]
+    - [42, 44]
+  rationale: "The removed channels are deterministic scaled copies of control commands and did not improve the existing ablation."
+
+seeds:
+  values: [26, 42, 2024, 2025, 2026]
+  aggregation_unit: "trained_model"
+
+training:
+  maximum_epochs: 150
+  early_stopping_patience: 30
+  checkpoint_selection: "minimum validation composite score"
+  test_data_used_for_selection: false
+
+models:
+  compared:
+    - px4_ekf2
+    - vanilla_gru
+    - vanilla_lstm
+    - pi_gru
+    - pirnn_akf
+    - kalmannet
+  recurrent_baseline_policy: "match input data, split, optimizer, stopping rule and approximately match parameter count"
+
+data:
+  primary_airframe: "Rascal110"
+  primary_split: "stratified_run_out"
+  cross_airframe_mode: "zero_shot"
+  freeze_primary_normalization_for_cross_airframe: true
+  cross_airframe_retuning: false
+  hitl_id_sessions: 5
+  hitl_ood_sessions: 5
+  hitl_min_duration_s: 100
+
+metrics:
+  accuracy:
+    - rmse_3d
+    - rmse_n
+    - rmse_e
+    - rmse_d
+    - direction_mae_horizontal
+    - airspeed_closure_rmse
+  temporal:
+    - jitter_second_difference
+    - max_instantaneous_jump
+  deployment:
+    - achieved_loop_hz
+    - missed_deadline_ratio
+    - inference_latency_mean_ms
+    - inference_latency_p95_ms
+    - companion_processing_mean_ms
+    - companion_processing_p95_ms
+
+statistics:
+  seed_summary: "mean_and_unbiased_sample_sd"
+  sample_uncertainty: "moving_block_bootstrap"
+  bootstrap_block_length: 256
+  bootstrap_resamples: 4000
+  window_comparisons: "paired_two_sided_exact_wilcoxon"
+  hitl_replicate_unit: "independent_session"
+
+akf_sensitivity:
+  perturbation_multipliers: [0.6, 0.8, 1.0, 1.2, 1.4]
+  parameter_groups:
+    - prediction_increment
+    - maneuver_score
+    - disagreement_shrinkage
+    - mahalanobis_gate
+    - dynamic_r_modulation
+    - final_fusion_weight
+  selection_split: "validation"
+  locked_evaluation_splits: ["test_id", "test_ood", "anomaly_windows", "transient_windows"]

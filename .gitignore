@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.log
+*.ulg
+*.tlog
+data/
+HITL/sessions/
+HITL/config/local.yaml

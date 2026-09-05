@@ -1,0 +1,7 @@
+group,parameter,frozen_value
+Geometry,wing area/span/mean chord,0.982/2.795/0.351 m
+Mass properties,empty mass,5.897 kg
+Mass properties,Ixx/Iyy/Izz,2.644/2.102/2.590 kg m^2
+Propulsion,nominal electric-engine power,1050 W
+Sampling,rate/window,50 Hz/100 samples
+Atmosphere,wind model,constant + 1-cos gust + Dryden

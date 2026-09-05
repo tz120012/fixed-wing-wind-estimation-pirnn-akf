@@ -1,0 +1,49 @@
+{
+  "selection_split": "validation_only",
+  "ema_alpha": 1.0,
+  "confidence_alpha_min": 0.45,
+  "confidence_alpha_max": 1.0,
+  "fixed_kf_q": 0.01,
+  "fixed_kf_r": 0.01,
+  "sensitivity_multipliers": [
+    0.6,
+    0.8,
+    1.0,
+    1.2,
+    1.4
+  ],
+  "groups": {
+    "prediction_increment": [
+      "prediction_delta_gain"
+    ],
+    "maneuver_score": [
+      "maneuver_gyro_weight",
+      "maneuver_acc_weight",
+      "maneuver_control_weight",
+      "maneuver_throttle_weight",
+      "q_maneuver_gain",
+      "r_maneuver_gain"
+    ],
+    "disagreement_shrinkage": [
+      "disagreement_scale",
+      "kinematic_trust_slope"
+    ],
+    "mahalanobis_gate": [
+      "mahalanobis_gate"
+    ],
+    "dynamic_r_modulation": [
+      "r_disagreement_gain",
+      "r_outlier_multiplier"
+    ],
+    "final_fusion_weight": [
+      "fusion_base",
+      "fusion_confidence_gain",
+      "fusion_disagreement_gain",
+      "fusion_covariance_gain"
+    ]
+  },
+  "source": "ordered_source_csv_sessions",
+  "csv_root": "data/data_csv",
+  "downsample_factor": 5,
+  "reset_filter_at_each_csv": true
+}

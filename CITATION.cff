@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the software and article."
+title: "Fixed-Wing 3D Wind Estimation with PI-GRU and Adaptive Kalman Smoothing"
+type: software
+version: 1.0.0
+date-released: 2026-09-05
+authors:
+  - family-names: Tian
+    given-names: Zhong
+    orcid: "https://orcid.org/0009-0000-6342-2874"
+  - family-names: Song
+    given-names: Mingli
+  - family-names: Fu
+    given-names: Jiahao
+  - family-names: Zhu
+    given-names: Weiyu
+  - family-names: Zhang
+    given-names: Bangchu
+repository-code: "https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf"
+abstract: >-
+  Frozen software, configurations, canonical checkpoints and compact evidence
+  for fixed-wing local three-dimensional wind estimation with PI-GRU and
+  measurement-noise-adaptive Kalman smoothing.
+keywords:
+  - fixed-wing UAV
+  - wind estimation
+  - physics-informed recurrent neural network
+  - adaptive Kalman filter
+license: MIT
