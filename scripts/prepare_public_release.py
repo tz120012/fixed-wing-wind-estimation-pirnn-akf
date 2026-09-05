@@ -20,6 +20,8 @@ SEEDS = (26, 42, 2024, 2025, 2026)
 PUBLIC_REPOSITORY = (
     "https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf"
 )
+DATA_DOI = "10.5281/zenodo.22338389"
+DATA_DOI_URL = f"https://doi.org/{DATA_DOI}"
 
 SOFTWARE_TREE_SOURCES = (
     "src",
@@ -342,7 +344,7 @@ def latest_checkpoint(base_dir: Path, prefix: str) -> Path:
 
 
 def software_readme() -> str:
-    return """# Fixed-Wing 3D Wind Estimation with PI-GRU and AKF
+    return f"""# Fixed-Wing 3D Wind Estimation with PI-GRU and AKF
 
 This repository is the public software release for the associated *Drones*
 manuscript. It contains the frozen 41-input PI-GRU/PIRNN-AKF pipeline,
@@ -390,12 +392,13 @@ Expected result: `302 checks agree, 0 differ`.
 
 ## Data
 
-The complete data are distributed under one versioned dataset DOI. The record
-contains six independently downloadable archives: acquisition JSON, training
-CSV, processed 41-input arrays, main/cross-configuration results, HITL
-campaign logs, and the compact minimal dataset.
+The complete data are prepared for distribution under one versioned dataset
+DOI. The record contains six independently downloadable archives: acquisition
+JSON, training CSV, processed 41-input arrays, main/cross-configuration
+results, HITL campaign logs, and the compact minimal dataset.
 
-Dataset DOI: **to be inserted after deposition**.
+Reserved dataset DOI: [{DATA_DOI}]({DATA_DOI_URL}). It will become resolvable
+when the Zenodo draft is published.
 
 ## Reproduction
 
@@ -440,7 +443,7 @@ snapshot.
 
 
 def public_release_manifest() -> str:
-    return """# Public release manifest
+    return f"""# Public release manifest
 
 Version: `v1.0.0`
 
@@ -464,12 +467,15 @@ Version: `v1.0.0`
 
 ## Release gates
 
-- [ ] Public GitHub URL resolves.
+- [x] Public GitHub URL resolves.
 - [ ] Software DOI resolves.
 - [ ] Unified data DOI resolves.
 - [ ] `CHECKSUMS.sha256` passes in a clean clone.
 - [ ] Minimal dataset reports 302 checks and zero differences.
 - [ ] No absolute local paths, private hosts or submission correspondence.
+
+Reserved unified-data DOI: `{DATA_DOI}`. It will resolve after the Zenodo
+draft is published.
 """
 
 
@@ -503,6 +509,10 @@ keywords:
   - physics-informed recurrent neural network
   - adaptive Kalman filter
 license: MIT
+references:
+  - type: dataset
+    title: "Data for Fixed-Wing 3D Wind Estimation with PI-GRU and Adaptive Kalman Smoothing"
+    doi: "{DATA_DOI}"
 """
 
 
@@ -545,6 +555,11 @@ def zenodo_software_metadata() -> dict[str, object]:
                 "identifier": PUBLIC_REPOSITORY,
                 "relation": "isSupplementTo",
                 "scheme": "url",
+            },
+            {
+                "identifier": DATA_DOI,
+                "relation": "isSupplementedBy",
+                "scheme": "doi",
             }
         ],
     }
@@ -778,6 +793,9 @@ def data_readme() -> str:
 
 Version: `v1.0.0`
 
+Reserved DOI: `https://doi.org/10.5281/zenodo.22338389` (registered when this
+Zenodo draft is published).
+
 This record contains the complete retained data lineage and experiment
 evidence for the associated *Drones* manuscript. The files are separated into
 six independently downloadable archives but share one dataset DOI.
@@ -835,7 +853,10 @@ separately under MIT with retained third-party notices.
 
 ## Citation
 
-The final DataCite citation and DOI will be inserted after deposition.
+Tian, Zhong; Song, Mingli; Fu, Jiahao; Zhu, Weiyu; Zhang, Bangchu (2026).
+*Data for Fixed-Wing 3D Wind Estimation with PI-GRU and Adaptive Kalman
+Smoothing* (Version 1.0.0) [Data set]. Zenodo.
+https://doi.org/10.5281/zenodo.22338389
 """
 
 
@@ -925,6 +946,7 @@ def data_zenodo_metadata() -> dict[str, object]:
         "license": "cc-by-4.0",
         "upload_type": "dataset",
         "version": "1.0.0",
+        "doi": DATA_DOI,
         "keywords": [
             "fixed-wing UAV",
             "wind estimation",

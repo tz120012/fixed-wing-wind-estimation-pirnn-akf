@@ -46,12 +46,13 @@ Expected result: `302 checks agree, 0 differ`.
 
 ## Data
 
-The complete data are distributed under one versioned dataset DOI. The record
-contains six independently downloadable archives: acquisition JSON, training
-CSV, processed 41-input arrays, main/cross-configuration results, HITL
-campaign logs, and the compact minimal dataset.
+The complete data are prepared for distribution under one versioned dataset
+DOI. The record contains six independently downloadable archives: acquisition
+JSON, training CSV, processed 41-input arrays, main/cross-configuration
+results, HITL campaign logs, and the compact minimal dataset.
 
-Dataset DOI: **to be inserted after deposition**.
+Reserved dataset DOI: [10.5281/zenodo.22338389](https://doi.org/10.5281/zenodo.22338389). It will become resolvable
+when the Zenodo draft is published.
 
 ## Reproduction
 

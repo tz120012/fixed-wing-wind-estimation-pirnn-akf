@@ -27,3 +27,7 @@ keywords:
   - physics-informed recurrent neural network
   - adaptive Kalman filter
 license: MIT
+references:
+  - type: dataset
+    title: "Data for Fixed-Wing 3D Wind Estimation with PI-GRU and Adaptive Kalman Smoothing"
+    doi: "10.5281/zenodo.22338389"

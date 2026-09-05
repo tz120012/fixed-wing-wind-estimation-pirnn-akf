@@ -114,6 +114,9 @@ the retained archive. The complete Rascal data lineage---38.54 GiB
 (41.38 GB) acquisition JSON, 9.34 GiB (10.03 GB) deterministic training CSV,
 and 10.76 GiB (11.56 GB) final 41-input arrays---and the training checkpoints
 are also outside this compact supporting-data file. The full data will be
-deposited as six independently downloadable archives under one dataset record;
-the code and checkpoints will use a separate software record. The public
-repository URL and software/data DOIs remain pre-submission tasks.
+deposited as six independently downloadable archives under one dataset record.
+The code and checkpoints are available at
+<https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf>. The data
+record has reserved DOI <https://doi.org/10.5281/zenodo.22338389>, which will
+become resolvable when the Zenodo draft is published; the software DOI remains
+pending the GitHub `v1.0.0` release.

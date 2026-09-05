@@ -173,7 +173,8 @@ reported unless flight-controller and companion clocks are synchronized.
 
 ## Current external release status
 
-See `RELEASE_MANIFEST.md`. The local package is prepared, but no public
-repository URL or Zenodo DOI has been minted. Those identifiers must not be
-inserted into the manuscript until the upload succeeds and archived files have
-been independently checked.
+See `RELEASE_MANIFEST.md`. The public source repository is available at
+<https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf>. The unified
+data record has reserved DOI <https://doi.org/10.5281/zenodo.22338389>, which
+will become resolvable after the Zenodo draft is published. The versioned
+software DOI remains pending creation of the GitHub `v1.0.0` release.
