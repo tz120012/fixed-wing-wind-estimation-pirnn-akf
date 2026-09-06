@@ -23,11 +23,11 @@ Version: `v1.0.0`
 ## Release gates
 
 - [x] Public GitHub URL resolves.
-- [ ] Software DOI resolves.
-- [ ] Unified data DOI resolves.
+- [x] Software DOI resolves.
+- [x] Unified data DOI resolves.
 - [x] `CHECKSUMS.sha256` passes in a clean clone.
 - [x] Minimal dataset reports 302 checks and zero differences.
 - [x] No absolute local paths, private hosts or submission correspondence.
 
-Reserved unified-data DOI: `10.5281/zenodo.22338389`. It will resolve after the Zenodo
-draft is published.
+Unified-data DOI: `10.5281/zenodo.22338389`.
+Software DOI: `10.5281/zenodo.22463526`.

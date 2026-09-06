@@ -1,6 +1,6 @@
 {
-  "title": "Fixed-Wing 3D Wind Estimation with PI-GRU and Adaptive Kalman Smoothing",
-  "description": "Frozen code, configurations, canonical checkpoints and compact evidence accompanying the associated Drones manuscript.",
+  "title": "Reproducibility package for local three-dimensional wind estimation with PI-GRU and adaptive Kalman filtering",
+  "description": "Frozen code, configurations, checkpoints and compact evidence for the major revision of the associated Drones manuscript.",
   "creators": [
     {
       "name": "Tian, Zhong",
@@ -27,19 +27,18 @@
     "fixed-wing UAV",
     "wind estimation",
     "physics-informed recurrent neural network",
-    "adaptive Kalman filter",
-    "hardware-in-the-loop"
+    "adaptive Kalman filter"
   ],
   "related_identifiers": [
-    {
-      "identifier": "https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf",
-      "relation": "isSupplementTo",
-      "scheme": "url"
-    },
     {
       "identifier": "10.5281/zenodo.22338389",
       "relation": "isSupplementedBy",
       "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf",
+      "relation": "isSupplementTo",
+      "scheme": "url"
     }
   ]
 }

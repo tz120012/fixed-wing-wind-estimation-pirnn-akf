@@ -175,6 +175,5 @@ reported unless flight-controller and companion clocks are synchronized.
 
 See `RELEASE_MANIFEST.md`. The public source repository is available at
 <https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf>. The unified
-data record has reserved DOI <https://doi.org/10.5281/zenodo.22338389>, which
-will become resolvable after the Zenodo draft is published. The versioned
-software DOI remains pending creation of the GitHub `v1.0.0` release.
+data record is available under DOI <https://doi.org/10.5281/zenodo.22338389>. The versioned
+software archive is available under DOI <https://doi.org/10.5281/zenodo.22463526>.

@@ -51,8 +51,8 @@ DOI. The record contains six independently downloadable archives: acquisition
 JSON, training CSV, processed 41-input arrays, main/cross-configuration
 results, HITL campaign logs, and the compact minimal dataset.
 
-Reserved dataset DOI: [10.5281/zenodo.22338389](https://doi.org/10.5281/zenodo.22338389). It will become resolvable
-when the Zenodo draft is published.
+Dataset DOI: [10.5281/zenodo.22338389](https://doi.org/10.5281/zenodo.22338389).
+Software DOI: [10.5281/zenodo.22463526](https://doi.org/10.5281/zenodo.22463526).
 
 ## Reproduction
 

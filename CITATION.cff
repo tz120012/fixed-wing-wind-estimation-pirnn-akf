@@ -17,6 +17,9 @@ authors:
   - family-names: Zhang
     given-names: Bangchu
 repository-code: "https://github.com/tz120012/fixed-wing-wind-estimation-pirnn-akf"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22463526"
 abstract: >-
   Frozen software, configurations, canonical checkpoints and compact evidence
   for fixed-wing local three-dimensional wind estimation with PI-GRU and
