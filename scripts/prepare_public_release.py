@@ -22,6 +22,8 @@ PUBLIC_REPOSITORY = (
 )
 DATA_DOI = "10.5281/zenodo.22338389"
 DATA_DOI_URL = f"https://doi.org/{DATA_DOI}"
+SOFTWARE_DOI = "10.5281/zenodo.22463526"
+SOFTWARE_DOI_URL = f"https://doi.org/{SOFTWARE_DOI}"
 
 SOFTWARE_TREE_SOURCES = (
     "src",
@@ -142,12 +144,12 @@ LABEL_NAMES = (
 
 DATA_PRIVACY_REPLACEMENTS = {
     str(ROOT): "/opt/wind-estimation",
-    "/path/to/PX4-Autopilot": "/opt/PX4-Autopilot",
+    "/home/airsim/wind_datasets/PX4-Autopilot": "/opt/PX4-Autopilot",
     str(Path("/", "home", "pi", "wind-estimation-main")):
         "/opt/wind-estimation",
     str(Path("/", "home", "rasp", "wind-estimation")):
         "/opt/wind-estimation",
-    "<PI_IP>": "192.0.2.20",
+    "192.168.3.168": "192.0.2.20",
 }
 
 
@@ -281,11 +283,11 @@ def sanitize_text_tree(root: Path) -> None:
     replacements = {
         f"{ROOT}/": "",
         str(ROOT): ".",
-        "/path/to/PX4-Autopilot":
+        "/home/airsim/wind_datasets/PX4-Autopilot":
             "/path/to/PX4-Autopilot",
-        "": "",
-        "<PI_IP>": "<PI_IP>",
-        "pi@<PI_IP>": "pi@<PI_IP>",
+        "/home/airsim/.local/lib/python3.8/site-packages": "",
+        "192.168.3.168": "<PI_IP>",
+        "rasp@<PI_IP>": "pi@<PI_IP>",
     }
     for path in root.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
@@ -397,8 +399,8 @@ DOI. The record contains six independently downloadable archives: acquisition
 JSON, training CSV, processed 41-input arrays, main/cross-configuration
 results, HITL campaign logs, and the compact minimal dataset.
 
-Reserved dataset DOI: [{DATA_DOI}]({DATA_DOI_URL}). It will become resolvable
-when the Zenodo draft is published.
+Dataset DOI: [{DATA_DOI}]({DATA_DOI_URL}).
+Software DOI: [{SOFTWARE_DOI}]({SOFTWARE_DOI_URL}).
 
 ## Reproduction
 
@@ -468,14 +470,14 @@ Version: `v1.0.0`
 ## Release gates
 
 - [x] Public GitHub URL resolves.
-- [ ] Software DOI resolves.
-- [ ] Unified data DOI resolves.
+- [x] Software DOI resolves.
+- [x] Unified data DOI resolves.
 - [x] `CHECKSUMS.sha256` passes in a clean clone.
 - [x] Minimal dataset reports 302 checks and zero differences.
 - [x] No absolute local paths, private hosts or submission correspondence.
 
-Reserved unified-data DOI: `{DATA_DOI}`. It will resolve after the Zenodo
-draft is published.
+Unified-data DOI: `{DATA_DOI}`.
+Software DOI: `{SOFTWARE_DOI}`.
 """
 
 
@@ -499,6 +501,9 @@ authors:
   - family-names: Zhang
     given-names: Bangchu
 repository-code: "{PUBLIC_REPOSITORY}"
+identifiers:
+  - type: doi
+    value: "{SOFTWARE_DOI}"
 abstract: >-
   Frozen software, configurations, canonical checkpoints and compact evidence
   for fixed-wing local three-dimensional wind estimation with PI-GRU and
@@ -793,8 +798,7 @@ def data_readme() -> str:
 
 Version: `v1.0.0`
 
-Reserved DOI: `https://doi.org/10.5281/zenodo.22338389` (registered when this
-Zenodo draft is published).
+DOI: `https://doi.org/10.5281/zenodo.22338389`.
 
 This record contains the complete retained data lineage and experiment
 evidence for the associated *Drones* manuscript. The files are separated into
